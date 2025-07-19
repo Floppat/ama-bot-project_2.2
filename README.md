@@ -8,12 +8,12 @@
 > yandex ai from telebot_ai project https://github.com/Floppat/AI_telebot
 ## Progress
 > ### TODO:
->> proper asyncio (last step)
+>> - proper asyncio (last step)
 >
 >### in progress:
->> integrated ai 
+>> - integrated ai 
 >
 >### optional (after main part):
->> improve moderation possibilities, e. g. admin isn't able to downgrade himself to user  
->> make buttons.py shorter  
->> improve gameplay  
+>> - improve moderation possibilities, e. g. admin isn't able to downgrade himself to user  
+>> - make buttons.py shorter  
+>> - improve gameplay  
