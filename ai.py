@@ -6,9 +6,9 @@ from functional import db, fetch_args
 
 
 
-def handle_AI(message, additional):
-    ai = Ai(db.ai_read(message.channel.id)) # загрузка памяти
-    ai.new_prompt(additional + message.text) # вписываю запрос
+def handle_AI(message: discord.Message, additional):
+    ai = Ai(db.ai_read(message.channel.id)) # type: ignore # загрузка памяти
+    ai.new_prompt(additional + message.content) # вписываю запрос
     asis = ai.gpt() # генерирую ответ
     ai.asis_ans(asis) # сохраняю ответ
     db.update(message.channel.id, ai.get_history()) # обновляю бд
@@ -34,9 +34,13 @@ def init(ctx: commands.Context):
                 return 'в этом канале уже включен ИИ'
             else:
                 db.change('ai_channels',ctx.channel.id,'enabled', 'True')
+                if db.ai_read(ctx.channel.id) is False:
+                    db.new_history_id(ctx.channel.id,'user' if ctx.guild is None else 'chat')
                 return 'Все ответы вымышлены и не отражают мнения создателя/бота\nВсе данные могут быть некорректны'
         except IndexError:
             db.new_add_channel(ctx, 'True')
+            if db.ai_read(ctx.channel.id) is False:
+                db.new_history_id(ctx.channel.id,'user' if ctx.guild is None else 'chat')
             return 'Все ответы вымышлены и не отражают мнения создателя/бота\nВсе данные могут быть некорректны'
     elif options[1] == 'disable':
         try: 

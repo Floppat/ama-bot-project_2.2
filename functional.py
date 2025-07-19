@@ -4,7 +4,7 @@ from config import database
 from db import DB_Manager
 
 
-db =  DB_Manager.init(database)
+db =  DB_Manager(database)
 #db.create_tables()
 
 

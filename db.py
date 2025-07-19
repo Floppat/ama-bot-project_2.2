@@ -8,14 +8,11 @@ from config import database
 
 
 class DB_Manager:
-    @classmethod
-    def init(cls, database_name: str):
-        self = cls()
-        self.database = database_name # type: ignore
-        return self
+    def __init__(self, database_name: str):
+        self.database = database_name
 
     def create_tables(self):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute('''
                 CREATE TABLE IF NOT EXISTS users(
@@ -86,7 +83,7 @@ class DB_Manager:
                 register_date: str,
                 xp: int):
         
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'''
                 INSERT INTO users VALUES
@@ -111,7 +108,7 @@ class DB_Manager:
                 price: int,
                 xp_price: int):
         
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'''
                 INSERT INTO pets (parent_id, pet_name, max_hp, hp, max_sp, sp, def, str, xp, max_str, min_def, avg, price, xp_price) VALUES
@@ -123,7 +120,7 @@ class DB_Manager:
 
 
     def new_status(self, status_name: str):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'INSERT INTO status_keys (status) VALUES ("{status_name}")')
             con.commit()
@@ -138,7 +135,7 @@ class DB_Manager:
             print('type error')
             return
         messages = [{'role':'system', 'text': text}]
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         history = json.dumps(messages)
         with con:
             con.execute(f' INSERT INTO ai_history (id, history) VALUES (?,?)', (user_id, history))
@@ -146,14 +143,14 @@ class DB_Manager:
 
 
     def new_add_channel(self, ctx: commands.Context, bool_arg):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'INSERT INTO ai_channels (id, enabled) VALUES (?,?)', (ctx.channel.id, bool_arg))
             con.commit()
 
 
     def change(self, table: str, PK: int, column: str, value: int | str | dict):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'UPDATE {table} SET {column} = ? WHERE id = {PK}',(value,))
             con.commit()
@@ -161,28 +158,28 @@ class DB_Manager:
 
 
     def delete(self,table: str, PK: int):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             con.execute(f'DELETE FROM {table} WHERE id = {PK}')
         return 'успешно удалено'
 
 
     def read(self, table: str, PK: int, *columns: tuple | str):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             cur = con.cursor()
             return cur.execute(f'SELECT {','.join(columns)} FROM {table} WHERE id = {PK}').fetchall()[0] # type: ignore
 
 
     def get_PK(self, table: str, col_name: str, col_content: int | str):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             cur = con.cursor()
             return cur.execute(f'SELECT id FROM {table} WHERE {col_name} = ?',(col_content,)).fetchall()[0][0]
 
 
     def leaderboard(self, table: str,page: int, order_by: str):
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             current_page = {}
             offset = page*10 - 10
@@ -198,8 +195,7 @@ class DB_Manager:
             return current_page
 
     def update(self, PK: int, history):
-        print('update')
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         history = json.dumps(history)
         with con:
             con.execute(f'UPDATE ai_history SET history = ? WHERE id = {PK}',(history,))
@@ -207,11 +203,13 @@ class DB_Manager:
         return 'успешно изменено'
     
     def ai_read(self, PK: int):
-        print('ai read')
-        con = sqlite3.connect(self.database) # type: ignore
+        con = sqlite3.connect(self.database)
         with con:
             cur = con.cursor()
-            return json.loads(cur.execute(f'SELECT history FROM ai_history WHERE id = {PK}').fetchall()[0][0])
+            try:
+                return json.loads(cur.execute(f'SELECT history FROM ai_history WHERE id = {PK}').fetchall()[0][0])
+            except IndexError:
+                return False
     
     
 

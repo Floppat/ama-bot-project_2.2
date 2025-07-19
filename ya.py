@@ -3,22 +3,18 @@ import config
 
 class Ai():
     def __init__(self, messages: list):
-        print('init')
-        self.messages = messages # type: ignore
+        self.messages = messages
 
     def new_prompt(self, text):
-        print('new prompt')
-        self.messages.append({"role": "user", "text": text}) # type: ignore
+        self.messages.append({"role": "user", "text": text})
 
     def asis_ans(self, text):
-        print('asis ans')
-        self.messages.append({"role": "assistant", "text": text}) # type: ignore
+        self.messages.append({"role": "assistant", "text": text})
 
     def get_history(self):
-        return self.messages # type: ignore
+        return self.messages
     
     def gpt(self):
-        print('gpt')
         self.prompt = {
             "modelUri": f"gpt://{config.id_ya}/yandexgpt",
             "completionOptions": {
@@ -26,7 +22,7 @@ class Ai():
                 "temperature": 0.4,
                 "maxTokens": "2000"
             },
-            "messages": self.messages # type: ignore
+            "messages": self.messages
         }
         
         url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"

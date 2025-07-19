@@ -8,13 +8,13 @@ from functional import db
 
 class User:
     def __init__(self, data: tuple):
-        self.user_id = data[0] # type: ignore
-        self.pet_PK = data[1] # type: ignore
+        self.user_id = data[0]
+        self.pet_PK = data[1]
         if None in db.read('users',data[0],'pet_id'):
             db.new_pet(data[0],'дружок',100,100,100,100,1,2,0,5,1,1,0,0)
         self.pet = Pet(db.read('pets', (db.read('users',data[0],'pet_id'))[0], '*'))
-        self.tag = data[2] # type: ignore
-        self.username = data[3] # type: ignore
+        self.tag = data[2]
+        self.username = data[3]
         self.nickname = data[4]
         self.status_PK = data[5]
         self.status = (db.read('status_keys', data[5], 'status'))[0]

@@ -12,7 +12,10 @@
 
 ### in progress:
 > integrated ai 
-
+>
+### done:
+> integrated ai 
+>
 ### optional (after main part):
 > improve moderation possibilities, e. g. admin isn't able to downgrade himself to user
 > make buttons.py shorter

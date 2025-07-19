@@ -12,6 +12,7 @@ import ai
 
 bot = commands.Bot(command_prefix='!', intents = discord.Intents.all())
 
+cmd_list = ['cmd_game','cmd_bullshit','hi','his','hist','histo','pet','cmd_warning','about', 'reasons','how help','ai']
 
 @bot.event
 async def on_ready():
@@ -160,8 +161,11 @@ async def ai_channel(ctx: commands.Context) -> None:
 @bot.event
 async def on_message(message: discord.Message):
     await bot.process_commands(message)
-    if message.author.id == bot.user.id: # type: ignore
+    if (message.author.id == bot.user.id): # type: ignore
         return
+    for i in range(len(cmd_list)):
+        if '!' + cmd_list[i] in message.content:
+            return
     await ai.ai_message(message)
     
 
