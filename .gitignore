@@ -1,0 +1,6 @@
+*.pyc
+img/
+unused_temp/
+config.py
+db.db
+
