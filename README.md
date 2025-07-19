@@ -16,4 +16,6 @@
 >### optional (after main part):
 >> - improve moderation possibilities, e. g. admin isn't able to downgrade himself to user  
 >> - make buttons.py shorter  
->> - improve gameplay  
+>> - improve gameplay
+>> - mostly other minor improvements
+>> - at this point only remains uploading bot to server 
