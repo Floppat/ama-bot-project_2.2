@@ -5,13 +5,12 @@ from ya import Ai
 from functional import db, fetch_args
 
 
-
 def handle_AI(message: discord.Message, additional):
-    ai = Ai(db.ai_read(message.channel.id)) # type: ignore # загрузка памяти
-    ai.new_prompt(additional + message.content) # вписываю запрос
-    asis = ai.gpt() # генерирую ответ
-    ai.asis_ans(asis) # сохраняю ответ
-    db.update(message.channel.id, ai.get_history()) # обновляю бд
+    ai = Ai(db.ai_read(message.channel.id)) # type: ignore
+    ai.new_prompt(additional + message.content)
+    asis = ai.gpt()
+    ai.asis_ans(asis)
+    db.update(message.channel.id, ai.get_history())
     return asis
 
 def check_reg(message):
@@ -23,7 +22,6 @@ def check_reg(message):
 def init(ctx: commands.Context):
     valid_options = ['disable', 'enable']
     options = fetch_args('ai', ctx.message.content)
-
 
     if options[1] not in valid_options:
         return 'wrong argument'
@@ -52,27 +50,15 @@ def init(ctx: commands.Context):
                 return 'успешно отключено'
         except IndexError:
             return 'в этом канале уже отключен ИИ'
-        
-    
 
-async def ai_message(message: discord.Message): # message: telebot.types.Message
-    # if message.from_user.id == message.chat.id: #проверка - групповой чат или лс
-    #     check_reg(message)
-    #     handle_AI(message, '')
-    # elif (message.text is not None and ("@" + str((bot.get_me()).username)) in message.text) or (message.reply_to_message is not None and message.reply_to_message.from_user.id == (bot.get_me()).id): # нечто сложное что написал не я
-    #     check_reg(message)
-    #     handle_AI(message, f'{message.from_user.full_name} написал: ')
-    # else:
-    #     pass
+async def ai_message(message: discord.Message):
     try:
         if (db.read('ai_channels',message.channel.id,'enabled'))[0] == 'True':
-            if message.guild is None: #проверка - групповой чат или лс
+            if message.guild is None:
                 check_reg(message)
                 await message.reply(handle_AI(message, ''))
-            # elif (message.text is not None and ("@" + str((bot.get_me()).username)) in message.text) or (message.reply_to_message is not None and message.reply_to_message.from_user.id == (bot.get_me()).id): # нечто сложное что написал не я
-            #      check_reg(message)
-            #      handle_AI(message, f'{message.from_user.full_name} написал: ')
-        else:
-            pass
+            elif 1294711574233092217 in [user.id for user in message.mentions]:
+                check_reg(message)
+                await message.reply(handle_AI(message, f'{message.author.name} написал: '))
     except IndexError:
         pass

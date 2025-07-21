@@ -20,7 +20,7 @@ async def on_ready():
     synced = await bot.tree.sync()
     print(f'{len(synced)} / команды доступны.')
 
-    
+
 @bot.tree.command(name='cmd', description='все команды бота')
 async def cmd(interaction: discord.Interaction) -> None:
     registred(interaction=interaction)
@@ -161,13 +161,13 @@ async def ai_channel(ctx: commands.Context) -> None:
 @bot.event
 async def on_message(message: discord.Message):
     await bot.process_commands(message)
-    if (message.author.id == bot.user.id): # type: ignore
+    if (message.author == bot.user):
         return
     for i in range(len(cmd_list)):
         if '!' + cmd_list[i] in message.content:
             return
     await ai.ai_message(message)
-    
+
 
 
 bot.run(token)

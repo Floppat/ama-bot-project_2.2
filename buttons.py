@@ -92,9 +92,11 @@ class bq5(discord.ui.View):
     async def bq51(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.user.right_answer()
         await self.user.quizresult(interaction=interaction)
+
     @discord.ui.button(label='B', style=discord.ButtonStyle.secondary)
     async def bq52(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.user.quizresult(interaction=interaction)
+        
     @discord.ui.button(label='C', style=discord.ButtonStyle.secondary)
     async def bq53(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.user.quizresult(interaction=interaction)

@@ -25,7 +25,6 @@ class User:
         self.right_answers = 0
 
 
-
     def __repr__(self) -> str:
         return (f'--- Информация об игроке {self.nickname} ---\n'
                 f'    | username: {self.username}\n'
@@ -45,7 +44,7 @@ class User:
         db.change('pets',self.pet_PK,'str',self.pet.str)
         db.change('pets',self.pet_PK,'xp',self.pet.xp)
         return f'Питомец прошёл изнурительные тренировки:\n{self.pet}'
-        
+
 
 
     def feed(self):
@@ -116,7 +115,7 @@ class User:
             return f'Недостаточно монет: чтобы купить этот артефакт, нужно {shop_pets[item].price} монет.'
         elif self.pet.xp < shop_pets[item].xp_price:
             return f'Недостаточно опыта: чтобы купить этот артефакт, нужно {shop_pets[item].xp_price} опыта.'
-        
+
         self.coins -= shop_pets[item].price
         self.pet = deepcopy(shop_pets[item])
         db.change('pets',self.pet_PK,'max_sp',self.pet.max_sp)

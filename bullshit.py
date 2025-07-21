@@ -21,7 +21,6 @@ def hist() -> str:
     return 'finally normal SQLite db... 09/03/25'
 def histo() -> str:
     return 'first attempt to do telebot port... 19/04/25 \nsecond attempt to do telebot port... 05/06/25'
-    
 
 async def pet(ctx: commands.Context) -> None:
     valid_images = [image.name for image in pathlib.Path('img/pet/').iterdir()]

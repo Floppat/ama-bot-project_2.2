@@ -1,7 +1,5 @@
 import sqlite3
-
 import json
-import discord
 from discord.ext import commands
 
 from config import database
@@ -10,6 +8,7 @@ from config import database
 class DB_Manager:
     def __init__(self, database_name: str):
         self.database = database_name
+
 
     def create_tables(self):
         con = sqlite3.connect(self.database)
@@ -71,6 +70,7 @@ class DB_Manager:
             )''')
             con.commit()
 
+
     def new_user(self,
                 user_id: int,
                 pet_id: int | str, 
@@ -130,7 +130,7 @@ class DB_Manager:
         if id_type == 'user':
             text = 'ты бот задача которого поболтать с пользователем'
         elif id_type == 'chat':
-            text = 'ты бот задача которого поболтать с пользователем. это - групповой чат. тут сообщения от разных пользователей.'
+            text = 'ты бот задача которого поболтать с пользователем. это - групповой чат. тут сообщения от разных пользователей. "<@1294711574233092217>" - это упоминание тебя, оно не несёт смысловой нагрузки. может присутствовать в сообщении или нет. игнорируй это'
         else:
             print('type error')
             return
@@ -194,6 +194,7 @@ class DB_Manager:
                 place+=1
             return current_page
 
+
     def update(self, PK: int, history):
         con = sqlite3.connect(self.database)
         history = json.dumps(history)
@@ -201,7 +202,8 @@ class DB_Manager:
             con.execute(f'UPDATE ai_history SET history = ? WHERE id = {PK}',(history,))
             con.commit()
         return 'успешно изменено'
-    
+
+
     def ai_read(self, PK: int):
         con = sqlite3.connect(self.database)
         with con:
@@ -210,8 +212,6 @@ class DB_Manager:
                 return json.loads(cur.execute(f'SELECT history FROM ai_history WHERE id = {PK}').fetchall()[0][0])
             except IndexError:
                 return False
-    
-    
 
 
 # if __name__ == '__main__':

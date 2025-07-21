@@ -4,8 +4,8 @@ from config import database
 from db import DB_Manager
 
 
-db =  DB_Manager(database)
-#db.create_tables()
+db = DB_Manager(database)
+db.create_tables()
 
 
 def plus_xp(interaction: discord.Interaction):
@@ -19,14 +19,13 @@ def change_status(interaction: discord.Interaction, status_id: int, user_tag: st
             return 'Указан неверный тег или такой пользователь не пользовался ботом.'
     else:
         return 'Недостаточно прав чтобы выполнить.'
-    
+
 def delete_user(interaction: discord.Interaction, user_tag: str):
     if int((db.read('users',interaction.user.id,'status_id'))[0]) == 2:
         try:
             return db.delete('users',db.get_PK('users','tag',user_tag))
         except IndexError:
             return 'Указан неверный тег или такой пользователь не пользовался ботом.'
-    
     else:
         return 'Недостаточно прав чтобы выполнить.'
 

@@ -44,7 +44,6 @@ def how_help() -> str:
             'но поскольку рост глобального потепления в основном происходит из за крупных производств, простые люди мало что могут сделать.\n'
             'Единственное значимое для климата действие - перейти на электрическую машину или вовсе пользоваться лишь общевственным транспортом')
 
-
 async def quiz(interaction: discord.Interaction):
     user = registred(interaction=interaction)
     await interaction.response.send_message(embed=eq1, view=bq1(user=user), ephemeral=True)

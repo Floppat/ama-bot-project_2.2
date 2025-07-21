@@ -37,7 +37,6 @@ def guide(interaction: discord.Interaction) -> str:
             'Также противник становится сильнее не по дням, а по боям, так что покупайте артефакты, ведь они повышают защиту.\n'
             'Важно: руководство для новичков и после покупки первого артефакта численные данные становятся неактуальны.\n')
 
-
 def user(interaction: discord.Interaction, user_tag: str):
     user = registred(interaction=interaction)
     if user_tag == 'me':
