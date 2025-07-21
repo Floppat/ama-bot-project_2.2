@@ -94,7 +94,7 @@ async def feed(interaction: discord.Interaction) -> None:
 
 @bot.tree.command(name='attack', description=' Настало время драки!')
 async def attack(interaction: discord.Interaction) -> None:
-    await mini_game.attack(interaction=interaction)
+    await interaction.response.send_message(mini_game.attack(interaction=interaction))
     fn.plus_xp(interaction=interaction)
 
 @bot.tree.command(name='sleep', description='У-устал')
@@ -130,7 +130,7 @@ async def histo(ctx: commands.Context) -> None:
 
 @bot.command('pet')
 async def pet(ctx: commands.Context) -> None:
-    await bullshit.pet(ctx=ctx)
+    await ctx.send(file=bullshit.pet(ctx=ctx)) # type: ignore
 
 
 @bot.command('cmd_warming')

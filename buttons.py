@@ -6,25 +6,26 @@ from users import User
 
 class master_button(discord.ui.View):
     iter = 2
+    right = ''
     def __init__(self, *, timeout = 180, user: User):
         super().__init__(timeout=timeout)
         self.user = user
-        self.right = None
 
     @discord.ui.button(label='A', style=discord.ButtonStyle.secondary)
     async def b1(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ  был: {self.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
+        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ  был: {master_button.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
 
     @discord.ui.button(label='B', style=discord.ButtonStyle.secondary)
     async def b2(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ был: {self.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
+        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ был: {master_button.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
 
     @discord.ui.button(label='C', style=discord.ButtonStyle.secondary)
     async def b3(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ был: {self.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
+        await interaction.response.edit_message(content=f"Неправильный ответ. правильный ответ был: {master_button.right}", embed=eq[master_button.iter], view=bq[master_button.iter](user=self.user))
 
 class bq1(master_button):
     def __init__(self, *, timeout = 180, user: User):
+        master_button.right = 'B'
         super().__init__(timeout=timeout,user=user)
         self.user = user
 
@@ -37,6 +38,7 @@ class bq1(master_button):
 class bq2(master_button):
     def __init__(self, *, timeout = 180, user: User):
         master_button.iter+=1
+        master_button.right = 'A'
         super().__init__(timeout=timeout,user=user)
         self.user = user
 
@@ -48,6 +50,7 @@ class bq2(master_button):
 class bq3(master_button):
     def __init__(self, *, timeout = 180, user: User):
         master_button.iter+=1
+        master_button.right = 'B'
         super().__init__(timeout=timeout,user=user)
         self.user = user
 
@@ -60,6 +63,7 @@ class bq3(master_button):
 class bq4(master_button):
     def __init__(self, *, timeout = 180, user: User):
         master_button.iter+=1
+        master_button.right = 'C'
         super().__init__(timeout=timeout,user=user)
         self.user = user
 
@@ -71,6 +75,8 @@ class bq4(master_button):
 
 class bq5(discord.ui.View):
     def __init__(self, *, timeout = 180, user: User):
+        master_button.iter=2
+        master_button.right = 'A'
         super().__init__(timeout=timeout)
         self.user = user
 

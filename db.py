@@ -215,6 +215,7 @@ class DB_Manager:
 
 
 # if __name__ == '__main__':
-#     db = DB_Manager.init(database)
+#     db = DB_Manager(database)
 #     db.new_status('user')
 #     db.new_status('administrator')
+#     db.new_status('superuser')

@@ -58,7 +58,7 @@ def feed(interaction: discord.Interaction):
 
 async def attack(interaction: discord.Interaction):
     user = registred(interaction=interaction)
-    await user.attack(interaction=interaction)
+    return user.attack(interaction=interaction)
 
 def sleep(interaction: discord.Interaction):
     user = registred(interaction=interaction)

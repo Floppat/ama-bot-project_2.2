@@ -55,9 +55,9 @@ class User:
         return f'Питомец сытно поел.\n{self.pet}'
 
 
-    async def attack(self, interaction: Interaction):
+    def attack(self, interaction: Interaction):
         if not self.pet.can_attack():
-            await interaction.response.send_message('Сперва вашему питомцу следует восстановить силы.')
+            msg = 'Сперва вашему питомцу следует восстановить силы.'
         enemy = Enemy(target_pet=self.pet)
         now_enemy=deepcopy(enemy)
         self.pet.sp -= 60
@@ -66,8 +66,7 @@ class User:
             self.pet.attack(target_pet=enemy)
 
             if not self.pet:
-                await interaction.response.send_message(f'Вы проиграли! Ваш враг был:{now_enemy}\n'
-                                                        f'Ваши характеристики:\n{self.pet}')
+                msg =f'Вы проиграли! Ваш враг был:{now_enemy}\nВаши характеристики:\n{self.pet}'
                 break
 
             if not enemy:
@@ -75,10 +74,10 @@ class User:
                 self.pet.max_str += 2
                 self.pet.avg += 2
                 self.pet.min_def += 1
-                await interaction.response.send_message(f'Вы выиграли. Противник стал сильнее. Ваш враг был:{now_enemy}\n'
-                                'Вы заработали 100 монет.\n'
-                                f'Итого монет: {self.coins}\n'
-                                f'Ваши характеристики:\n{self.pet}')
+                msg = (f'Вы выиграли. Противник стал сильнее. Ваш враг был:{now_enemy}\n'
+                        'Вы заработали 100 монет.\n'
+                        f'Итого монет: {self.coins}\n'
+                        f'Ваши характеристики:\n{self.pet}')
                 break
         db.change('pets',self.pet_PK,'hp',self.pet.hp)
         db.change('pets',self.pet_PK,'sp',self.pet.sp)
@@ -86,6 +85,7 @@ class User:
         db.change('pets',self.pet_PK,'max_str',self.pet.max_str)
         db.change('pets',self.pet_PK,'avg',self.pet.avg)
         db.change('pets',self.pet_PK,'min_def',self.pet.min_def)
+        return msg
 
 
     def sleep(self):

@@ -22,10 +22,10 @@ def hist() -> str:
 def histo() -> str:
     return 'first attempt to do telebot port... 19/04/25 \nsecond attempt to do telebot port... 05/06/25'
 
-async def pet(ctx: commands.Context) -> None:
+def pet(ctx: commands.Context):
     valid_images = [image.name for image in pathlib.Path('img/pet/').iterdir()]
     images = fetch_args('pet', ctx.message.content)
 
     for image in images:
         if f'{image}.gif' in valid_images:
-            await ctx.send(file=discord.File(f'img/pet/{image}.gif'))
+            return(discord.File(f'img/pet/{image}.gif'))
