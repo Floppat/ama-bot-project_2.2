@@ -14,10 +14,9 @@
 >> - proper asyncio (last step) (lord have mercy)  
 >### done:
 >> - integrated ai  
->
->### optional (after main part):  
->> - improve moderation possibilities, e. g. admin isn't able to downgrade himself to user  
 >> - make buttons.py shorter  
+>> - improve moderation possibilities, e. g. admin isn't able to downgrade himself to user  
+>### optional (after main part):  
 >> - improve gameplay  
 >> - mostly other minor improvements  
 >> - at this point only remains uploading bot to server  

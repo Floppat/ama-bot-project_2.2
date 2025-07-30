@@ -3,7 +3,7 @@ import discord
 from users import registred, get_other_user
 
 
-def cmd() -> str:
+async def cmd() -> str:
     return ('/change_nick       (изменяет ник который будет отображатся лидербордах)\n'
             '/change_pet_name   (изменяет имя питомца)\n'
             '/leaderboard       (entity= users/pets ; page= номер страницы ; \n'
@@ -19,8 +19,8 @@ def cmd() -> str:
             '/shop              (покупка артефактов)\n'
             '!cmd_game')
 
-def prehistory(interaction: discord.Interaction) -> str:
-    registred(interaction=interaction)
+async def prehistory(interaction: discord.Interaction) -> str:
+    await registred(interaction=interaction)
     return ('Давным-давно люди жили в мире с природой и животными...\n'
             'но не так давно, всего каких два века назад, люди забыли свою историю и начали загрязнять природу всё сильнее...\n'
             'Это породило маленьких монстров - Карков\n'
@@ -28,8 +28,8 @@ def prehistory(interaction: discord.Interaction) -> str:
             'Спасите планету - победите всех Карков. Но... проблема в том что люди не видят Карков... Как же быть? Природа поможет! \n' 
             'Ваш питомец - возможно единственный в своём роде, может остановить Карков! Тренируёте его и спасите землю от Карков!\n')
 
-def guide(interaction: discord.Interaction) -> str:
-    registred(interaction=interaction)
+async def guide(interaction: discord.Interaction) -> str:
+    await registred(interaction=interaction)
     return ('Каждый день (до использования команды /sleep) вы можете 2 раза потренироватся, затем 1 раз поесть.\n'
             'За день можно 2 раза потренироватся, или 1 раз потренироватся и 1 раз подратся.\n'
             'Совет: лучше перед боем не тренероватся, ведь будет меньше здоровья, а поесть вы не сможете.\n'
@@ -37,33 +37,33 @@ def guide(interaction: discord.Interaction) -> str:
             'Также противник становится сильнее не по дням, а по боям, так что покупайте артефакты, ведь они повышают защиту.\n'
             'Важно: руководство для новичков и после покупки первого артефакта численные данные становятся неактуальны.\n')
 
-def user(interaction: discord.Interaction, user_tag: str):
-    user = registred(interaction=interaction)
+async def user(interaction: discord.Interaction, user_tag: str):
+    user = await registred(interaction=interaction)
     if user_tag == 'me':
-        return f'{user}'
+        return f'{await user.__repr__()}'
     else:
-        return get_other_user(user_tag=user_tag)
+        return await get_other_user(user_tag=user_tag)
 
-def stats(interaction: discord.Interaction):
-    user = registred(interaction=interaction)
-    return f'{user.pet}'
+async def stats(interaction: discord.Interaction):
+    user = await registred(interaction=interaction)
+    return f'{await user.pet.__repr__()}'
 
-def train(interaction: discord.Interaction):
-    user = registred(interaction=interaction)
-    return user.train()
+async def train(interaction: discord.Interaction):
+    user = await registred(interaction=interaction)
+    return await user.train()
 
-def feed(interaction: discord.Interaction):
-    user = registred(interaction=interaction)
-    return user.feed()
+async def feed(interaction: discord.Interaction):
+    user = await registred(interaction=interaction)
+    return await user.feed()
 
 async def attack(interaction: discord.Interaction):
-    user = registred(interaction=interaction)
-    return user.attack(interaction=interaction)
+    user = await registred(interaction=interaction)
+    return await user.attack(interaction=interaction)
 
-def sleep(interaction: discord.Interaction):
-    user = registred(interaction=interaction)
-    return user.sleep()
+async def sleep(interaction: discord.Interaction):
+    user = await registred(interaction=interaction)
+    return await user.sleep()
 
-def shop(interaction: discord.Interaction, item: str):
-    user = registred(interaction=interaction)
-    return user.shop(item=item)
+async def shop(interaction: discord.Interaction, item: str):
+    user = await registred(interaction=interaction)
+    return await user.shop(item=item)

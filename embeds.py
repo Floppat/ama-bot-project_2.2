@@ -82,14 +82,14 @@ eq5.add_field(
              B: машины
              C: из за перенаселения планета не справляется с количевством выдыхаемого людми углекислого газа''')
 
-def lb_embed(page, entity, parameter):
+async def lb_embed(page, entity, parameter):
     lb = discord.Embed(
         title=f'Лидеры по {parameter}',
         color=discord.Colour.from_rgb(100, 200, 90))
     value=''
     for key in page:
         if entity == 'pets':
-            value += f'{key} **{(db.read('users',(db.get_PK('users','pet_id',page[key]))[0]),'nickname')[0]}**\n'
+            value += f'{key} **{(await db.read('users',(await db.get_PK('users','pet_id',page[key]))[0]),'nickname')[0]}**\n'
         elif entity == 'users':
             value += f'{key} **{page[key][0]}**\n'
     lb.add_field(

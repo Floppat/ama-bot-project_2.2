@@ -31,7 +31,7 @@ class bq1(master_button):
 
     @discord.ui.button(label='B', style=discord.ButtonStyle.secondary)
     async def b2(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.user.right_answer()
+        await self.user.right_answer()
         await interaction.response.edit_message(content="Правильный ответ!", embed=eq2, view=bq2(user=self.user))
 
 
@@ -44,7 +44,7 @@ class bq2(master_button):
 
     @discord.ui.button(label='A', style=discord.ButtonStyle.secondary)
     async def b1(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.user.right_answer()
+        await self.user.right_answer()
         await interaction.response.edit_message(content="Правильный ответ!", embed=eq3, view=bq3(user=self.user))
 
 class bq3(master_button):
@@ -56,7 +56,7 @@ class bq3(master_button):
 
     @discord.ui.button(label='B', style=discord.ButtonStyle.secondary)
     async def b2(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.user.right_answer()
+        await self.user.right_answer()
         await interaction.response.edit_message(content="Правильный ответ!", embed=eq4, view=bq4(user=self.user))
 
 
@@ -69,7 +69,7 @@ class bq4(master_button):
 
     @discord.ui.button(label='C', style=discord.ButtonStyle.secondary)
     async def b3(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.user.right_answer()
+        await self.user.right_answer()
         await interaction.response.edit_message(content="Правильный ответ!", embed=eq5, view=bq5(user=self.user))
 
 
@@ -82,7 +82,7 @@ class bq5(discord.ui.View):
 
     @discord.ui.button(label='A', style=discord.ButtonStyle.secondary)
     async def b1(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.user.right_answer()
+        await self.user.right_answer()
         await self.user.quizresult(interaction=interaction)
 
     @discord.ui.button(label='B', style=discord.ButtonStyle.secondary)

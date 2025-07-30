@@ -21,7 +21,7 @@ class Pet:
         self.xp_price = stats[14]
 
 
-    def __repr__(self) -> str:
+    async def __repr__(self) -> str:
         return (f'--- Информация о питомце {self.name} ---\n'
                 f'    | здоровье: {self.hp}/{self.max_hp}\n'
                 f'    | стамина: {self.sp}/{self.max_sp}\n'
@@ -30,38 +30,38 @@ class Pet:
                 f'    | опыт: {self.xp}')
 
 
-    def __bool__(self) -> bool:
+    async def __bool__(self) -> bool:
         return self.hp > 0
-    def can_attack(self) -> bool:
+    async def can_attack(self) -> bool:
         return self.sp >= 60
-    def attack(self, target_pet):
+    async def attack(self, target_pet):
         damage_dealt = self.str - target_pet.defense
         damage_dealt = damage_dealt if damage_dealt > 0 else 0
         target_pet.hp -= damage_dealt
         target_pet.hp = target_pet.hp if target_pet.hp > 0 else 0
 
 
-    def can_feed(self) -> bool:
+    async def can_feed(self) -> bool:
         return self.hp <= 80
-    def feed(self):
+    async def feed(self):
         self.hp += 20
 
-    def can_sleep(self) -> bool:
+    async def can_sleep(self) -> bool:
         return self.sp <= 40
-    def sleep(self):
+    async def sleep(self):
         self.sp = self.max_sp
     
 
-    def can_train(self) -> bool:
+    async def can_train(self) -> bool:
         return self.hp >= 20 and self.sp >= 40
-    def train(self):
+    async def train(self):
         self.hp -= 10
         self.sp -= 40
         self.str += 2
         self.xp += 1
 
 
-    def shop(self) -> str:
+    async def shop(self) -> str:
         return (f' | стоимость: {self.price}\n'
                 f' | необходимо опыта чтобы купить: {self.xp_price}\n'
                 f' | стамина: {self.sp}/{self.max_sp}\n'
@@ -76,14 +76,14 @@ class Enemy:
         self.defense = random.randint(target_pet.min_def, target_pet.avg)
 
 
-    def __repr__(self) -> str:
+    async def __repr__(self) -> str:
         return (f'<Здоровье врага: {self.hp},'
                 f'сила врага: {self.str}, защита врага: {self.defense}>')
 
 
-    def __bool__(self) -> bool:
+    async def __bool__(self) -> bool:
         return self.hp > 0
-    def attack(self, target_pet):
+    async def attack(self, target_pet):
         damage_dealt = self.str - target_pet.defense
         damage_dealt = damage_dealt if damage_dealt > 0 else 0
         target_pet.hp -= damage_dealt
