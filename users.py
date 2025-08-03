@@ -27,7 +27,7 @@ class User:
         self.right_answers = 0
         return self
 
-    async def __repr__(self) -> str:
+    async def __repr__(self): # pyright: ignore[reportIncompatibleMethodOverride]
         return (f'--- Информация об игроке {self.nickname} ---\n' # pyright: ignore[reportAttributeAccessIssue]
                 f'    | username: {self.username}\n' # pyright: ignore[reportAttributeAccessIssue]
                 f'    | монеты: {self.coins}\n'
@@ -138,6 +138,8 @@ class User:
             job = ', попробуйте почитать о глобальном потеплении ещё раз!'
         elif self.right_answers >= 3 and self.right_answers <= 4:
             job = ', неплохой результат, повторите теорию и попробуйте ещё раз!'
+        else:
+            job = ', читоооооор'
         if self.right_answers > self.quiz_record:
             self.quiz_record = self.right_answers
         await interaction.response.send_message(content=f'Вы набрали {self.right_answers}/5 очков{job}\n'

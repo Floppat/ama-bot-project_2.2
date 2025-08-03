@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 
 from config import token
 import functional as fn
@@ -9,7 +10,8 @@ import mini_game
 import bullshit
 import global_warming 
 import ai
-import asyncio
+
+
 bot = commands.Bot(command_prefix='!', intents = discord.Intents.all())
 
 cmd_list = ['cmd_game','cmd_bullshit','hi','his','hist','histo','pet','cmd_warning','about', 'reasons','how help','ai']
@@ -41,7 +43,10 @@ async def change_pet_name(interaction: discord.Interaction, new_name: str)-> Non
     await fn.plus_xp(interaction=interaction)
 
 @bot.tree.command(name='leaderboard', description='используйте !cmd для руководства')
-async def leaderboard(interaction: discord.Interaction, entity: str, page: int, parameter: str) -> None:
+@app_commands.describe(
+    entity='users/pets',
+    parameter='for users: coins, quiz_record,xp;for pets:xp, any battle char')
+async def leaderboard(interaction: discord.Interaction, entity: str, parameter: str, page: int = 1) -> None:
     await registred(interaction=interaction)
     page = await fn.db.leaderboard(entity,page,parameter) # pyright: ignore[reportAssignmentType]
     await interaction.response.send_message(embed=await lb_embed(page,entity,parameter))
@@ -51,7 +56,7 @@ async def leaderboard(interaction: discord.Interaction, entity: str, page: int, 
 @bot.tree.command(name='change_status', description='изменить статус пользователя')
 async def change_status(interaction: discord.Interaction, status_id: int, user_tag: str)-> None:
     await registred(interaction=interaction)
-    await interaction.response.send_message(fn.change_status(interaction=interaction,status_id=status_id,user_tag=user_tag))
+    await interaction.response.send_message(await fn.change_status(interaction=interaction,status_id=status_id,user_tag=user_tag))
 
 @bot.tree.command(name='delete_user', description='удалить пользователя из базы данных')
 async def delete_user(interaction: discord.Interaction, user_tag: str)-> None:
@@ -75,8 +80,6 @@ async def guide(interaction: discord.Interaction) -> None:
 
 @bot.tree.command(name='user', description='информация о вас (user_tag=me) или другом пользователе')
 async def user(interaction: discord.Interaction, user_tag: str) -> None:
-    await asyncio.sleep(10)
-    print('yeah')
     await interaction.response.send_message(await mini_game.user(interaction=interaction, user_tag=user_tag))
     await fn.plus_xp(interaction=interaction)
 

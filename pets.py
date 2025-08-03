@@ -21,7 +21,7 @@ class Pet:
         self.xp_price = stats[14]
 
 
-    async def __repr__(self) -> str:
+    async def __repr__(self) -> str: # pyright: ignore[reportIncompatibleMethodOverride]
         return (f'--- Информация о питомце {self.name} ---\n'
                 f'    | здоровье: {self.hp}/{self.max_hp}\n'
                 f'    | стамина: {self.sp}/{self.max_sp}\n'
@@ -76,7 +76,7 @@ class Enemy:
         self.defense = random.randint(target_pet.min_def, target_pet.avg)
 
 
-    async def __repr__(self) -> str:
+    async def __repr__(self) -> str: # pyright: ignore[reportIncompatibleMethodOverride]
         return (f'<Здоровье врага: {self.hp},'
                 f'сила врага: {self.str}, защита врага: {self.defense}>')
 

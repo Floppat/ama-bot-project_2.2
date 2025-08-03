@@ -34,7 +34,9 @@ async def change_status(interaction: discord.Interaction, status_id: int, user_t
 async def delete_user(interaction: discord.Interaction, user_tag: str):
     try:
         await check_status(interaction, user_tag, True)
-        return db.delete('users',await db.get_PK('users','tag',user_tag))
+        pet = await db.get_PK('pets','parent_id',interaction.user.id)
+        await db.delete('users',await db.get_PK('users','tag',user_tag))
+        return await db.delete('pets',pet)
     except IndexError:
         return 'Указан неверный тег или такой пользователь не пользовался ботом.'
     except AccessDeined:

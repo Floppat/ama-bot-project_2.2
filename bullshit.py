@@ -6,10 +6,12 @@ from functional import fetch_args
 
 
 async def cmd() -> str:
-    return ('!hi              (1.0)\n'
-            '!his             (2.0)\n'
-            '!hist            (2.1)\n'
-            '!histo           (telebot)\n'
+    return ('!hi                       (1.0)\n'
+            '!his                      (2.0)\n'
+            '!hist                     (2.1)\n'
+            '!histo                    (telebot)\n'
+            '!histor                   (2.2)\n'
+            '!ai    enable/disable     (включает/выключает ии в чате)\n'
             '!pet\n'
             '!cmd_bullshit')
 
@@ -21,6 +23,8 @@ async def hist() -> str:
     return 'finally normal SQLite db... 09/03/25'
 async def histo() -> str:
     return 'first attempt to do telebot port... 19/04/25 \nsecond attempt to do telebot port... 05/06/25'
+async def histor() -> str:
+    return 'proper asyncio + ai integration... 20/07/25'
 
 async def pet(ctx: commands.Context):
     valid_images = [image.name for image in pathlib.Path('img/pet/').iterdir()]

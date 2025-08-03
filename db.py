@@ -157,7 +157,7 @@ class DB_Manager:
 
 
     async def read(self, table: str, PK: int, *columns: tuple | str):
-        async with aiosqlite.connect(self.database) as con:                     
+        async with aiosqlite.connect(self.database) as con:              
             return (await (await con.execute(f'SELECT {','.join(columns)} FROM {table} WHERE id = {PK};')).fetchall())[0] # pyright: ignore[reportIndexIssue, reportArgumentType, reportCallIssue]
 
 
@@ -176,6 +176,8 @@ class DB_Manager:
                 SQL_query = f'SELECT id, pet_name, {order_by} FROM {table} ORDER BY {order_by} DESC LIMIT {limit} OFFSET {offset};'
             elif table == 'users':
                 SQL_query = f'SELECT nickname, {order_by} FROM {table} ORDER BY {order_by} DESC LIMIT {limit} OFFSET {offset};'
+            else:
+                return ''
             async with con.execute(SQL_query) as cur:
                 async for row in cur:
                     current_page[place]= row
