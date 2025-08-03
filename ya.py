@@ -42,7 +42,3 @@ class Ai():
                     # Обработка ошибок
                     error_text = await response.text()
                     raise Exception(f"API request failed: {response.status} - {error_text}")
-        
-        # response = requests.post(url, headers=headers, json=self.prompt)
-        # result = response.json().get('result')
-        # return result['alternatives'][0]['message']['text']
