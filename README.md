@@ -1,8 +1,11 @@
 ## Инструменты для реализации:
 > discord libary  
+> asyncio - included in stdlib  
+> aiohttp  
+> aiosqlite  
+>> non-lybary units:  
 > yandexGPT API  
-> squlite3 (included in python stdlib)  
-
+> 
 ## Проект состоит из:
 > ama bot 2.1 https://github.com/Floppat/ama-bot-project  
 > yandex ai from telebot_ai project https://github.com/Floppat/AI_telebot
@@ -10,7 +13,7 @@
 > ### TODO:
 >
 >### in progress:
->> - optional things 
+>> - optional things: gameplay
 >### done:
 >> - integrated ai  
 >> - proper asyncio (last step) (lord have mercy) 
