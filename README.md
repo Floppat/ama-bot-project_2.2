@@ -1,10 +1,10 @@
 ## Инструменты для реализации:
 > discord libary  
-> asyncio - included in stdlib
-> aiohttp
-> aiosqlite
->> non-lybary units:
-> yandexGPT API
+> asyncio - included in stdlib  
+> aiohttp  
+> aiosqlite  
+>> non-lybary units:  
+> yandexGPT API  
 > 
 ## Проект состоит из:
 > ama bot 2.1 https://github.com/Floppat/ama-bot-project  
