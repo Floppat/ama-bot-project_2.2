@@ -10,41 +10,41 @@ class User:
     @classmethod
     async def init(cls, data: tuple):
         self = cls()
-        self.user_id = data[0]
-        self.pet_PK = data[1]
+        self.user_id = data[0] # pyright: ignore[reportAttributeAccessIssue]
+        self.pet_PK = data[1] # pyright: ignore[reportAttributeAccessIssue]
         if None in await db.read('users',data[0],'pet_id'):
             await db.new_pet(data[0],'дружок',100,100,100,100,1,2,0,5,1,1,0,0)
         self.pet = Pet(await db.read('pets', (await db.read('users',data[0],'pet_id'))[0], '*'))
-        self.tag = data[2]
-        self.username = data[3]
-        self.nickname = data[4]
-        self.status_PK = data[5]
-        self.status = (await db.read('status_keys', data[5], 'status'))[0]
+        self.tag = data[2] # pyright: ignore[reportAttributeAccessIssue]
+        self.username = data[3] # pyright: ignore[reportAttributeAccessIssue]
+        self.nickname = data[4] # pyright: ignore[reportAttributeAccessIssue]
+        self.status_PK = data[5] # pyright: ignore[reportAttributeAccessIssue]
+        self.status = (await db.read('status_keys', data[5], 'status'))[0] # pyright: ignore[reportAttributeAccessIssue]
         self.coins = data[6]
         self.quiz_record = data[7]
-        self.register_date = data[8]
-        self.xp = data[9]
+        self.register_date = data[8] # pyright: ignore[reportAttributeAccessIssue]
+        self.xp = data[9] # pyright: ignore[reportAttributeAccessIssue]
         self.right_answers = 0
         return self
 
     async def __repr__(self) -> str:
-        return (f'--- Информация об игроке {self.nickname} ---\n'
-                f'    | username: {self.username}\n'
+        return (f'--- Информация об игроке {self.nickname} ---\n' # pyright: ignore[reportAttributeAccessIssue]
+                f'    | username: {self.username}\n' # pyright: ignore[reportAttributeAccessIssue]
                 f'    | монеты: {self.coins}\n'
                 f'    | рекорд в квизе: {self.quiz_record}\n'
-                f'    | впервые с амой: {self.register_date}\n'
-                f'    | опыт: {self.xp}\n'
-                f'    | питомец: {(await db.read('pets',self.pet_PK,'pet_name'))[0]}\n{await self.pet.__repr__()}')
+                f'    | впервые с амой: {self.register_date}\n' # pyright: ignore[reportAttributeAccessIssue]
+                f'    | опыт: {self.xp}\n' # pyright: ignore[reportAttributeAccessIssue]
+                f'    | питомец: {(await db.read('pets',self.pet_PK,'pet_name'))[0]}\n{await self.pet.__repr__()}') # pyright: ignore[reportAttributeAccessIssue]
 
 
     async def train(self):
         if not await self.pet.can_train():
             return 'Сперва вашему питомцу следует восстановить силы.'
         await self.pet.train()
-        await db.change('pets',self.pet_PK,'hp',self.pet.hp)
-        await db.change('pets',self.pet_PK,'sp',self.pet.sp)
-        await db.change('pets',self.pet_PK,'str',self.pet.str)
-        await db.change('pets',self.pet_PK,'xp',self.pet.xp)
+        await db.change('pets',self.pet_PK,'hp',self.pet.hp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'sp',self.pet.sp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'str',self.pet.str) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'xp',self.pet.xp) # pyright: ignore[reportAttributeAccessIssue]
         return f'Питомец прошёл изнурительные тренировки:\n{await self.pet.__repr__()}'
 
 
@@ -53,7 +53,7 @@ class User:
         if not await self.pet.can_feed():
             return 'Ваш питомец не голоден.'
         await self.pet.feed()
-        await db.change('pets',self.pet_PK,'hp',self.pet.hp)
+        await db.change('pets',self.pet_PK,'hp',self.pet.hp) # pyright: ignore[reportAttributeAccessIssue]
         return f'Питомец сытно поел.\n{await self.pet.__repr__()}'
 
 
@@ -81,12 +81,12 @@ class User:
                         f'Итого монет: {self.coins}\n'
                         f'Ваши характеристики:\n{await self.pet.__repr__()}')
                 break
-        await db.change('pets',self.pet_PK,'hp',self.pet.hp)
-        await db.change('pets',self.pet_PK,'sp',self.pet.sp)
-        await db.change('users',self.user_id,'coins',self.coins)
-        await db.change('pets',self.pet_PK,'max_str',self.pet.max_str)
-        await db.change('pets',self.pet_PK,'avg',self.pet.avg)
-        await db.change('pets',self.pet_PK,'min_def',self.pet.min_def)
+        await db.change('pets',self.pet_PK,'hp',self.pet.hp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'sp',self.pet.sp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('users',self.user_id,'coins',self.coins) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'max_str',self.pet.max_str) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'avg',self.pet.avg) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'min_def',self.pet.min_def) # pyright: ignore[reportAttributeAccessIssue]
         return msg
 
 
@@ -94,17 +94,17 @@ class User:
         if not await self.pet.can_sleep():
             return 'Ваш питомец ещё не устал.'
         await self.pet.sleep()
-        await db.change('pets',self.pet_PK,'sp',self.pet.sp)
+        await db.change('pets',self.pet_PK,'sp',self.pet.sp) # pyright: ignore[reportAttributeAccessIssue]
         return f'Питомец выспался:\n{await self.pet.__repr__()}'
 
 
     async def shop(self, item: str):
         shop_pets = {
-            '1': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,120,120,5,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,400,7)),
-            '2': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,140,140,15,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,800,13)),
-            '3': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,160,160,25,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,1200,19)),
-            '4': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,180,180,35,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,1600,25)),
-            '5': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,200,200,45,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,2000,31))
+            '1': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,120,120,5,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,400,7)), # pyright: ignore[reportAttributeAccessIssue]
+            '2': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,140,140,15,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,800,13)), # pyright: ignore[reportAttributeAccessIssue]
+            '3': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,160,160,25,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,1200,19)), # pyright: ignore[reportAttributeAccessIssue]
+            '4': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,180,180,35,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,1600,25)), # pyright: ignore[reportAttributeAccessIssue]
+            '5': Pet((self.pet_PK,self.user_id,self.pet.name,self.pet.max_hp,self.pet.hp,200,200,45,2,0,self.pet.max_str,self.pet.min_def,self.pet.avg,2000,31)) # pyright: ignore[reportAttributeAccessIssue]
         }
         message_items = '\n'.join([f'{item=}; {await shop_pets[item].shop()}' for item in shop_pets])
 
@@ -120,12 +120,12 @@ class User:
 
         self.coins -= shop_pets[item].price
         self.pet = deepcopy(shop_pets[item])
-        await db.change('pets',self.pet_PK,'max_sp',self.pet.max_sp)
-        await db.change('pets',self.pet_PK,'sp',self.pet.sp)
-        await db.change('pets',self.pet_PK,'def',self.pet.defense)
-        await db.change('pets',self.pet_PK,'str',self.pet.str)
-        await db.change('pets',self.pet_PK,'xp',self.pet.xp)
-        await db.change('users',self.user_id,'coins',self.coins)
+        await db.change('pets',self.pet_PK,'max_sp',self.pet.max_sp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'sp',self.pet.sp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'def',self.pet.defense) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'str',self.pet.str) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('pets',self.pet_PK,'xp',self.pet.xp) # pyright: ignore[reportAttributeAccessIssue]
+        await db.change('users',self.user_id,'coins',self.coins) # pyright: ignore[reportAttributeAccessIssue]
         return f'Ваш пет надел артефакт:\n{await self.pet.__repr__()}'
 
 
@@ -142,7 +142,7 @@ class User:
             self.quiz_record = self.right_answers
         await interaction.response.send_message(content=f'Вы набрали {self.right_answers}/5 очков{job}\n'
                                                         f'Рекорд:{self.quiz_record}/5 очков.')
-        await db.change('users',self.user_id,'quiz_record',self.quiz_record)
+        await db.change('users',self.user_id,'quiz_record',self.quiz_record) # pyright: ignore[reportAttributeAccessIssue]
         self.right_answers = 0
 
 

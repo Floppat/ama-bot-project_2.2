@@ -6,7 +6,7 @@ from functional import db, fetch_args
 
 
 async def handle_AI(message: discord.Message, additional):
-    ai = Ai(await db.ai_read(message.channel.id)) # type: ignore
+    ai = Ai(await db.ai_read(message.channel.id)) # pyright: ignore[reportArgumentType]
     await ai.new_prompt(additional + message.content)
     asis = await ai.gpt()
     await ai.asis_ans(asis)

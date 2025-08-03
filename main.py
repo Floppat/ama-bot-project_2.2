@@ -17,7 +17,7 @@ cmd_list = ['cmd_game','cmd_bullshit','hi','his','hist','histo','pet','cmd_warni
 @bot.event
 async def on_ready():
     await fn.tables()
-    print(f'Бот {bot.user.name} готов.') # type: ignore
+    print(f'Бот {bot.user.name} готов.') # pyright: ignore[reportOptionalMemberAccess]
     synced = await bot.tree.sync()
     print(f'{len(synced)} / команды доступны.')
 
@@ -43,7 +43,7 @@ async def change_pet_name(interaction: discord.Interaction, new_name: str)-> Non
 @bot.tree.command(name='leaderboard', description='используйте !cmd для руководства')
 async def leaderboard(interaction: discord.Interaction, entity: str, page: int, parameter: str) -> None:
     await registred(interaction=interaction)
-    page = await fn.db.leaderboard(entity,page,parameter) # type: ignore
+    page = await fn.db.leaderboard(entity,page,parameter) # pyright: ignore[reportAssignmentType]
     await interaction.response.send_message(embed=await lb_embed(page,entity,parameter))
     await fn.plus_xp(interaction=interaction)
 
@@ -133,7 +133,7 @@ async def histo(ctx: commands.Context) -> None:
 
 @bot.command('pet')
 async def pet(ctx: commands.Context) -> None:
-    await ctx.send(file=await bullshit.pet(ctx=ctx)) # type: ignore
+    await ctx.send(file=await bullshit.pet(ctx=ctx)) # pyright: ignore[reportArgumentType, reportCallIssue]
 
 
 @bot.command('cmd_warming')

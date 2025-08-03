@@ -1,8 +1,10 @@
-import requests
+import aiohttp
+
 import config
 
+
 class Ai():
-    async def __init__(self, messages: list):
+    def __init__(self, messages: list):
         self.messages = messages
 
     async def new_prompt(self, text):
@@ -30,7 +32,17 @@ class Ai():
             "Content-Type": "application/json",
             "Authorization": f"Api-Key {config.key_ya}"
         }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=self.prompt) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    result = data.get('result', {})
+                    return result.get('alternatives', [{}])[0].get('message', {}).get('text', '')
+                else:
+                    # Обработка ошибок
+                    error_text = await response.text()
+                    raise Exception(f"API request failed: {response.status} - {error_text}")
         
-        response = requests.post(url, headers=headers, json=self.prompt) ##############################
-        result = response.json().get('result')#############################################################
-        return result['alternatives'][0]['message']['text']
+        # response = requests.post(url, headers=headers, json=self.prompt)
+        # result = response.json().get('result')
+        # return result['alternatives'][0]['message']['text']
